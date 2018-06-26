@@ -1,0 +1,62 @@
+Entity:
+	User 用户类[String id, String userName, String loginName, String loginName, Date created, String creater, String modifier]
+	UserCreation 创建用户类 [String loginName, String userName, String password]
+	UserCredential 登录凭证 [String userName ,String password(加密后)]
+	Page 分页[int size, int pageIndex, int total, List<T> records]
+
+	Permission 权限 [String id, String permissionName, Date created, String creater, String modifier]
+
+	Account 账户 [accountId, accountName, isProperty(资产/负债 Boolean), balance, created, creator, modifier, modified, statementDate, RepaymentDate]
+	Account [String accountName, Boolean isProperty, BigDecimal balance, Optional<Date> statementDate, Optional<Date> RepaymentDate]
+
+	BillItem 账目 [id, userid, created, accountId, costType, amount]
+	BillItemCreation [String userId, String accountId, Enum<CostType> costType, BigDecimal amount]
+	Bill 账单 [String id, BigDecimal expenditure, BigDecimal income, List<BillItem> billItemList]
+	BillItemFilter 查询账单项过滤器 [Optional<Enum> billDate, Optional<Date> created, Optional<String> accountId, Optional<Enum> costType]
+	
+	// 使用 BillItemFilter
+	// StatisticsFilter 统计过滤器 [Optional<String> accountId, Optional<Enum> billDate, Optional<Enum> costType]
+
+Enum:
+	BillDate[year/month/week/day]
+	CostType[ ... ]
+
+User:
+	String create(UserCreation userCreation);
+	User getUserById(String id);
+	LoginResult login(UserCredential credential);
+	void changePassword(String userId, String oldPassword, String newPassword)
+	void delete(String userId);
+	Page<User> query(String nameLike, int page, int pageSize, String sortKey, boolean desc);
+
+Permission:
+	List<Permission> getAll();
+	List<Permission> getUserPermissions(String userId);
+	Permission getById(String id);
+	void assignToUser(String userId, List<Permission> permission);
+	void delete(String permissionId);
+
+	// 权限应当通过配置文件配置不需要 create 方法
+	// String create(PermissionCreation creation);
+
+Account:
+	String create(AccountCreation creation);
+	void update(Account account);
+	void delete(String accounId);
+	List<Account> getAccounts();
+	Account getAccountById(String id);
+
+billItem:
+	String create(BillItemCreation creation);
+	void update(BillItem billItem);
+	void delete(String billItemId);
+	List<BillItem> getBillItems();
+	List<BillItem> queryBillItem(BillItemFilter filter);
+
+Statistics:
+	BigDecimal getProperty(String userId);
+	BigDecimal getDebt(String userId, String AccountId);
+	Bill getBill(String userID, BillItemFilter filter);
+
+Remind：
+	void remind(String userId, String accountId);
