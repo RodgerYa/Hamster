@@ -24,7 +24,8 @@
 ## 账户
 
 #### 1. 账户 `Account`: 
-`accountId`, `accountName`, `isProperty`(资产/负债 Boolean), `balance`，`created`, `creator`, `modifier`, `modified`, `statementDate`, `RepaymentDate`
+`accountId`, `accountName`, `accountType`, `balance`，`created`, `creator`, `modifier`, `modified`, `extra`
+[账户类型不应当以资产/负债进行简单区分，而应当以具体的账户类型区分，服务中使用枚举类型，账户实体中的属性应当是所有账户具有的共同属性，另外添加扩展字段，部分特殊账户具有的特殊属性以<k, v>形式的 String 存储在扩展字段中，比如：账单日 `statementDate`,还款日 `RepaymentDate`, 信用额度 `lineOfCredit`, 备注/描述 `description`]
 
   - 添加账户
   用户添加账户，一个用户可新增多个账户，家庭组内共享账户，新增账户后，同步更新用户/用户组资产
