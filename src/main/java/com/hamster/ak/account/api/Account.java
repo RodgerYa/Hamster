@@ -1,4 +1,4 @@
-package com.hamster.ak.account.core.api;
+package com.hamster.ak.account.api;
 
 import lombok.Data;
 

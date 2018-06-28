@@ -1,10 +1,10 @@
 Entity:
-	User 用户类[String id, String userName, String loginName, String loginName, Date created, String creater, String modifier]
+	User 用户类[String id, String userName, String loginName, String password, Date created, String creator, String modifier]
 	UserCreation 创建用户类 [String loginName, String userName, String password]
 	UserCredential 登录凭证 [String userName ,String password(加密后)]
 	Page 分页[int size, int pageIndex, int total, List<T> records]
 
-	Permission 权限 [String id, String permissionName, Date created, String creater, String modifier]
+	Permission 权限 [String id, String permissionName]
 
 	Account 账户 [accountId, accountName, isProperty(资产/负债 Boolean), balance, created, creator, modifier, modified, statementDate, RepaymentDate]
 	Account [String accountName, Boolean isProperty, BigDecimal balance, Optional<Date> statementDate, Optional<Date> RepaymentDate]
