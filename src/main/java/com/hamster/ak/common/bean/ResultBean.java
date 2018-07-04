@@ -1,16 +1,20 @@
 package com.hamster.ak.common.bean;
 
+import lombok.Builder;
 import lombok.Data;
+
+import java.util.Optional;
 
 /**
  * @author yanwenbo
  */
 @Data
+@Builder
 public class ResultBean<T> {
 
     private Integer code;
     private String message;
-    private T data;
+    private Optional<T> data = Optional.empty();
 
     private static final Integer SUCCESS = 0;
     private static final Integer FAIL = 1;

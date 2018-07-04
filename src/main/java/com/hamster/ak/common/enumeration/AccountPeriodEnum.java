@@ -1,4 +1,4 @@
 package com.hamster.ak.common.enumeration;
 
-public enum CostType {
+public enum AccountPeriodEnum {
 }
