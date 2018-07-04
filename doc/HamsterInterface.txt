@@ -6,20 +6,20 @@ Entity:
 
 	Permission 权限 [String id, String permissionName]
 
-	Account 账户 [accountId, accountName, isProperty(资产/负债 Boolean), balance, created, creator, modifier, modified, statementDate, RepaymentDate]
-	Account [String accountName, Boolean isProperty, BigDecimal balance, Optional<Date> statementDate, Optional<Date> RepaymentDate]
+	Account [String accountName, AccountType accountTypeEnum, BigDecimal balance, Date created, String creator, String modifier, Date modified, String extra [Optional<Date> statementDate, Optional<Date> RepaymentDate], Option<BigDecimal> LineOfCredit]
 
-	BillItem 账目 [id, userid, created, accountId, costType, amount]
-	BillItemCreation [String userId, String accountId, Enum<CostType> costType, BigDecimal amount]
+	BillItem 账目 [id, userid, created, accountId, costTypeEnum, amount, fromAssetsAccount]
+	BillItemCreation [String userId, String accountId, Enum<CostType> costTypeEnum, BigDecimal amount]
 	Bill 账单 [String id, BigDecimal expenditure, BigDecimal income, List<BillItem> billItemList]
-	BillItemFilter 查询账单项过滤器 [Optional<Enum> billDate, Optional<Date> created, Optional<String> accountId, Optional<Enum> costType]
+	BillItemFilter 查询账单项过滤器 [Optional<Enum> billDate, Optional<Date> created, Optional<String> accountId, Optional<Enum> costTypeEnum]
 	
 	// 使用 BillItemFilter
-	// StatisticsFilter 统计过滤器 [Optional<String> accountId, Optional<Enum> billDate, Optional<Enum> costType]
+	// StatisticsFilter 统计过滤器 [Optional<String> accountId, Optional<Enum> billDate, Optional<Enum> costTypeEnum]
 
 Enum:
 	BillDate[year/month/week/day]
 	CostType[ ... ]
+	AccountType
 
 User:
 	String create(UserCreation userCreation);
@@ -42,7 +42,7 @@ Permission:
 Account:
 	String create(AccountCreation creation);
 	void update(Account account);
-	void delete(String accounId);
+	void delete(String accountId);
 	List<Account> getAccounts();
 	Account getAccountById(String id);
 
