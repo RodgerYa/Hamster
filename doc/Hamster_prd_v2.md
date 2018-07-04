@@ -24,7 +24,7 @@
 ## 账户
 
 #### 1. 账户 `Account`: 
-`accountId`, `accountName`, `accountType`, `balance`，`created`, `creator`, `modifier`, `modified`, `extra`
+`accountId`, `accountName`, `accountTypeEnum`, `balance`，`created`, `creator`, `modifier`, `modified`, `extra`
 [账户类型不应当以资产/负债进行简单区分，而应当以具体的账户类型区分，服务中使用枚举类型，账户实体中的属性应当是所有账户具有的共同属性，另外添加扩展字段，部分特殊账户具有的特殊属性以<k, v>形式的 String 存储在扩展字段中，比如：账单日 `statementDate`,还款日 `RepaymentDate`, 信用额度 `lineOfCredit`, 备注/描述 `description`]
 
   - 添加账户
@@ -36,7 +36,7 @@
   - 删除账户
   用户删除账户，保留记录一个月/直接删除账户，只保存删除记录
 
-2.记账款项 `billItem`: `id, userid, created, accountId, costType, amount`
+2.记账款项 `billItem`: `id, userid, created, accountId, costTypeEnum, amount`
   用户通过【记账】动作添加【款项】，款项拥有【用户、创建时间、支付账户、支出类型、消费金额（分）】，后续根据款项的【创建时间】统计为【日账单、月账单、年账单】，根据【支出类型】统计为【消费占比】，【支付账户】统计为【支付习惯】。
 帐期账单: `id, expenditure, income, List<BillItem>`
 
