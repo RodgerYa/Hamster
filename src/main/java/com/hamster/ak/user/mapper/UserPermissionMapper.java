@@ -9,9 +9,9 @@ import java.util.List;
 @Component
 public interface UserPermissionMapper {
 
-    public void insert(@Param("bean")UserPermissionBean bean);
+    void insert(@Param("bean")UserPermissionBean bean);
 
-    public void deleteById(@Param("id") Integer userId);
+    void deleteById(@Param("id") Integer userId);
 
-    public List<UserPermissionBean> selectById(@Param("id") Integer userId);
+    List<UserPermissionBean> selectById(@Param("id") Integer userId);
 }

@@ -9,12 +9,12 @@ import java.util.List;
 @Component
 public interface PermissionMapper {
 
-    public void insert(@Param("bean") PermissionBean bean);
+    void insert(@Param("bean") PermissionBean bean);
 
-    public void delete(@Param("id") Integer id);
+    void delete(@Param("id") Integer id);
 
-    public PermissionBean select(@Param("id") Integer id);
+    PermissionBean select(@Param("id") Integer id);
 
-    public List<PermissionBean> selectAll();
+    List<PermissionBean> selectAll();
 
 }

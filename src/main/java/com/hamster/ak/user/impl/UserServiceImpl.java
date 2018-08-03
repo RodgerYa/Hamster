@@ -11,12 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 import java.util.Optional;
 
-@Component
 @Slf4j
+@Component
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -62,20 +61,14 @@ public class UserServiceImpl implements UserService {
                         .modifier(userBean.getModifier())
                         .creator(userBean.getCreator())
                         .created(userBean.getCreated()).build()
-        ).orElseThrow(() -> {
-            log.error("id：" + id + " 用户不存在");
-            throw new HmException("用户不存在");
-        });
+        ).orElseThrow(() -> new HmException("用户不存在"));
     }
 
     @Override
     public LoginResult login(UserCredential credential) {
 
         UserBean userBean = userMapper.selectByLoginName(credential.getLoginName());
-        Optional.ofNullable(userBean).orElseThrow(() -> {
-            log.error("用户" + credential.getLoginName() + "不存在");
-            throw new HmException("登陆失败，当前用户不存在");
-        });
+        Optional.ofNullable(userBean).orElseThrow(() -> new HmException("登陆失败，当前用户不存在"));
 
         if (!userBean.getPassword().equals(credential.getPassword())) {
             log.error("密码错误");
@@ -85,7 +78,7 @@ public class UserServiceImpl implements UserService {
         String token = tokenService.encodeToken(Token.builder()
                 .userId(userBean.getId())
                 .userName(userBean.getName())
-                .expiration(DateUtils.addHours(new Date, hmProperties.getExpiryTime())).build());
+                .expiration(DateUtils.addHours(new Date(), hmProperties.getExpiryTime())).build());
 
         return LoginResult.builder().userId(userBean.getId())
                 .loginName(userBean.getLoginName())
