@@ -1,5 +1,6 @@
 package com.hamster.ak.account.api;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -9,6 +10,7 @@ import java.util.List;
  * @author yanwenbo
  */
 @Data
+@Builder
 public class Bill {
     private String id;
     private BigDecimal expenditure;

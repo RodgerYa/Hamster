@@ -1,10 +1,13 @@
 package com.hamster.ak.account.api;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
  * @author yanwenbo
  */
+@Service
 public interface BillItemService {
     /**
      * 记账 新增款项 / 自动更新资产/负债的功能由前端处理

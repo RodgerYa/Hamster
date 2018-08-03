@@ -1,6 +1,7 @@
 package com.hamster.ak.account.api;
 
 import com.hamster.ak.common.enumeration.AccountTypeEnum;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -8,6 +9,7 @@ import java.util.Optional;
 /**
  * @author yanwenbo
  */
+@Data
 public class AssetsAccountCreation {
 
     private AccountTypeEnum accountTypeEnum;

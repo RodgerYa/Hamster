@@ -3,7 +3,7 @@ package com.hamster.ak.common.exception;
 /**
  * @author yanwenbo
  */
-public class HmException extends Exception {
+public class HmException extends RuntimeException{
 
     public HmException(String message) {
         super(message);

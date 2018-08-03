@@ -16,12 +16,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author yanwenbo
  */
 @SpringBootApplication(exclude = MybatisAutoConfiguration.class)
-@ComponentScan(basePackageClasses = {AccountkeepingApplication.class})
+@ComponentScan(basePackageClasses = {HmApplication.class})
 @EnableSwagger2
-public class AccountkeepingApplication {
+public class HmApplication {
 
     public static void main(String[] args) {
-        new SpringApplicationBuilder(AccountkeepingApplication.class)
+        new SpringApplicationBuilder(HmApplication.class)
                 .properties("spring.jackson.date-format=yyyy-MM-dd HH:mm:ss")
                 .properties("spring.jackson.time-zone=GMT+8")
                 .properties("spring.jackson.serialization.WRITE_NULL_MAP_VALUES=true")

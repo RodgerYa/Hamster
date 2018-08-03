@@ -1,7 +1,10 @@
 package com.hamster.ak.user.api;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public interface PermissionService {
 
     /**
@@ -18,7 +21,7 @@ public interface PermissionService {
      *
      * @return 权限列表
      */
-    List<Permission> getUserPermissions(String userId);
+    List<Permission> getUserPermissions(Integer userId);
 
     /**
      * 根据id获取单个权限
@@ -27,7 +30,7 @@ public interface PermissionService {
      *
      * @return
      */
-    Permission getById(String id);
+    Permission getById(Integer id);
 
     /**
      * 赋予用户权限
@@ -36,7 +39,7 @@ public interface PermissionService {
      *
      * @param permissions 权限列表 not empty
      */
-    void assignToUser(String userId, List<Permission> permissions);
+    void assignToUser(Integer userId, List<Permission> permissions);
 
     /**
      * 删除权限 考虑到创建通过配置文件，删除是否也通过对文件修改 ？？？

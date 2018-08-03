@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hamster.ak.user.mapper.UserMapper">
+    <sql id="base_column_list">
+      id,loginname,name,password,created,modified,creator,modifier
+    </sql>
+
+    <select id="selectByLoginName" resultType="com.hamster.ak.user.bean.UserBean">
+        select
+        <include refid="base_column_list"/>
+        from user where loginname =#{loginNameLike}
+    </select>
+
+    <select id="selectById" resultType="com.hamster.ak.user.bean.UserBean">
+        select
+        <include refid="base_column_list"/>
+        from user where id =#{userId, jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert">
+        insert into user
+        <include refid="base_column_list"/>
+        values
+        (
+        #{bean.id}, #{bean.loginNameLike}, #{bean.name}, #{bean.password}, #{bean.created},
+        #{bean.modified}, #{bean.creator}, #{bean.modifier}
+        )
+    </insert>
+
+    <update id="updatePassword">
+		update user set password =#{password}, modifier =#{oper} ,modified =#{modified}  where id =#{userId}
+	</update>
+
+    <delete id="deleteByUserId">
+		delete from user where id =#{userId, jdbcType=INTEGER}
+	</delete>
+
+    <select id="count" resultType="java.lang.Long">
+        select count(1) from user where 1=1
+        <if test="filter.nameLike != null and filter.nameLike  !='' ">
+            and name like concat ('%' , #{filter.nameLike} , '%')
+        </if>
+        <if test="filter.loginNameLike != null and filter.loginNameLike  !='' ">
+            and loginname like concat ('%' , #{filter.loginNameLike} , '%')
+        </if>
+    </select>
+
+    <select id="query" resultType="com.hamster.ak.user.bean.UserBean">
+        select
+        <include refid="base_column_list"/>
+        from user where 1=1
+        <if test="filter.nameLike != null and filter.nameLike  !='' ">
+            and name like concat ('%' , #{filter.nameLike} , '%')
+        </if>
+        <if test="filter.loginNameLike != null and filter.loginNameLike  !='' ">
+            and loginname like concat ('%' , #{filter.loginNameLike} , '%')
+        </if>
+        <if test="sortKey !=null and sortKey !='' ">
+            order by ${sortKey}
+        </if>
+        <if test="desc">
+            <![CDATA[ desc ]]>
+        </if>
+        limit ${offset}, ${limit}
+    </select>
+</mapper>

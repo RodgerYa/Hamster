@@ -1,10 +1,13 @@
 package com.hamster.ak.account.api;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
  * @author yanwenbo
  */
+@Service
 public interface AssetsAccountService {
 
     /**

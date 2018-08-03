@@ -6,13 +6,5 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     initialSize: 0
     maxActive: 10
-  jackson:
-    date-format: yyyy-MM-dd
-    time-zone: GMT+8
 server:
   port: 10000
-mybatis:
-  mapper-locations: classpath:mybatis/*.xml
-
-hamster:
-  expiryTime: 1   # token 过期时间（小时）

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hamster.ak.user.mapper.PermissionMapper">
+
+	<select id="select" resultType="com.hamster.ak.user.bean.PermissionBean">
+		select id,name from permission
+		where id=#{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectAll" resultType="com.hamster.ak.user.bean.PermissionBean">
+		select * from permission
+	</select>
+
+	<insert id="insert">
+		insert into permission (id,name)
+		values (#{bean.id, jdbcType=INTEGER}, #{bean.name, jdbcType=VARCHAR})
+	</insert>
+
+	<delete id="delete">
+		delete from permission where id =#{id, jdbcType=INTEGER}
+	</delete>
+</mapper>

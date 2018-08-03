@@ -3,6 +3,7 @@ package com.hamster.ak.account.api;
 import com.hamster.ak.common.enumeration.CostTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import java.util.Date;
  * @author yanwenbo
  */
 @Data
+@Builder
 @ApiModel(value = "款项")
 public class BillItem {
 

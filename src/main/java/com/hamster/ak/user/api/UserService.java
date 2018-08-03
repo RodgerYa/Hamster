@@ -2,7 +2,9 @@ package com.hamster.ak.user.api;
 
 import com.hamster.ak.common.exception.HmException;
 import com.hamster.ak.common.bean.Page;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface UserService {
 
     /**
@@ -14,7 +16,7 @@ public interface UserService {
      *
      * @throws HmException
      */
-    String create(UserCreation userCreation) throws HmException;
+    Integer create(UserCreation userCreation);
 
     /**
      * 根据用户id 查询用户
@@ -23,7 +25,7 @@ public interface UserService {
      *
      * @return user
      */
-    User getUserById(String id);
+    User getUserById(Integer id);
 
     /**
      * 用户登陆验证
@@ -45,14 +47,14 @@ public interface UserService {
      *
      * @throws HmException
      */
-    void changePassword(String userId, String oldPassword, String newPassword) throws HmException;
+    void changePassword(Integer userId, String oldPassword, String newPassword);
 
     /**
-     * 删除用户
+     * 删W除用户
      *
      * @param userId not null
      */
-    void delete(String userId);
+    void delete(Integer userId);
 
     /**
      *
