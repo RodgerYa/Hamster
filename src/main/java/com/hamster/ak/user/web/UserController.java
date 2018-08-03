@@ -16,6 +16,7 @@ import static com.hamster.ak.common.config.Routes.LOGIN;
 
 @RestController
 public class UserController {
+
     @Autowired
     private UserService userService;
 

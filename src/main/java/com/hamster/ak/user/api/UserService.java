@@ -4,7 +4,6 @@ import com.hamster.ak.common.exception.HmException;
 import com.hamster.ak.common.bean.Page;
 import org.springframework.stereotype.Service;
 
-@Service
 public interface UserService {
 
     /**

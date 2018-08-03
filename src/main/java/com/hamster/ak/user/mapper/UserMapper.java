@@ -10,19 +10,19 @@ import java.util.List;
 
 @Component
 public interface UserMapper {
-    public UserBean selectByLoginName(@Param("loginNameLike") String loginName);
+    UserBean selectByLoginName(@Param("loginNameLike") String loginName);
 
-    public UserBean selectById(@Param("userId") Integer userId);
+    UserBean selectById(@Param("userId") Integer userId);
 
-    public int insert(@Param("bean") UserBean bean);
+    int insert(@Param("bean") UserBean bean);
 
-    public int updatePassword(@Param("userId") Integer userId, @Param("password") String password,
+    int updatePassword(@Param("userId") Integer userId, @Param("password") String password,
                               @Param("oper") String oper, @Param("modified") Date modified);
 
-    public int deleteByUserId(@Param("userId") Integer userId);
+    int deleteByUserId(@Param("userId") Integer userId);
 
-    public long count(@Param("filter") UserFilter filter);
+    long count(@Param("filter") UserFilter filter);
 
-    public List<UserBean> query(@Param("filter") UserFilter filter, @Param("offset") int offset,
+    List<UserBean> query(@Param("filter") UserFilter filter, @Param("offset") int offset,
                                 @Param("limit") int limit, @Param("sortKey") String sortKey, @Param("desc") boolean desc);
 }
