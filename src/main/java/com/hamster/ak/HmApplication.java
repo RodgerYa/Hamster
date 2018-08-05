@@ -22,6 +22,7 @@ public class HmApplication {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(HmApplication.class).run(args);
+        System.out.println("hhhhh");
     }
 
     @Bean
