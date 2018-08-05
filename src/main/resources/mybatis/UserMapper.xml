@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hamster.ak.user.mapper.UserMapper">
+<mapper namespace="com.hamster.ak.mapper.UserMapper">
     <sql id="base_column_list">
       id,loginname,name,password,created,modified,creator,modifier
     </sql>
 
-    <select id="selectByLoginName" resultType="com.hamster.ak.user.bean.UserBean">
+    <select id="selectByLoginName" resultType="com.hamster.ak.bean.UserBean">
         select
         <include refid="base_column_list"/>
         from user where loginname =#{loginNameLike}
     </select>
 
-    <select id="selectById" resultType="com.hamster.ak.user.bean.UserBean">
+    <select id="selectById" resultType="com.hamster.ak.bean.UserBean">
         select
         <include refid="base_column_list"/>
         from user where id =#{userId, jdbcType=INTEGER}
@@ -45,7 +45,7 @@
         </if>
     </select>
 
-    <select id="query" resultType="com.hamster.ak.user.bean.UserBean">
+    <select id="query" resultType="com.hamster.ak.bean.UserBean">
         select
         <include refid="base_column_list"/>
         from user where 1=1

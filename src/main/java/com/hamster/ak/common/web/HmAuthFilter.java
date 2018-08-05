@@ -2,10 +2,10 @@ package com.hamster.ak.common.web;
 
 import com.google.common.collect.Sets;
 import com.hamster.ak.common.exception.HmException;
-import com.hamster.ak.user.api.ThreadLocalUser;
-import com.hamster.ak.user.api.Token;
-import com.hamster.ak.user.api.TokenService;
-import com.hamster.ak.user.api.User;
+import com.hamster.ak.api.ThreadLocalUser;
+import com.hamster.ak.api.Token;
+import com.hamster.ak.api.TokenService;
+import com.hamster.ak.api.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
