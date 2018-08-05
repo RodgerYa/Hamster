@@ -1,7 +1,7 @@
 # Hamster
 account keeping 记账本
 
-- `git clone https://github.com/yanwbo/Hamster.git` 执行命令，将远程仓库拉取到本地，进入目录 /Hamster
+- `git clone git@github.com:yanwbo/Hamster.git` 执行命令，将远程仓库拉取到本地，进入目录 /Hamster
 
 - 进入目录后，已经建立本地与远程仓库之间关联。可使用 `git checkout -b 分支名` 在本地新建自己的分支进行开发
 
