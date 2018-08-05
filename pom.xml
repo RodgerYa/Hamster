@@ -112,6 +112,11 @@
             <groupId>com.google.common.base</groupId>
             <artifactId>Predicate</artifactId>
         </dependency>
+        <dependency>
+            <groupId>rsaUtil</groupId>
+            <artifactId>ycoding</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
     </dependencies>
 

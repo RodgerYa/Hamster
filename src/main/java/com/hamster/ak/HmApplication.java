@@ -1,5 +1,6 @@
 package com.hamster.ak;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -15,6 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author yanwenbo
  */
 @SpringBootApplication(exclude = MybatisAutoConfiguration.class)
+@MapperScan(basePackages = {"com.hamster.ak.mapper"})
 @EnableSwagger2
 public class HmApplication {
 

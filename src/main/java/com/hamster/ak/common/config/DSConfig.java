@@ -9,9 +9,11 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
@@ -22,26 +24,29 @@ import javax.sql.DataSource;
 @MapperScan(basePackageClasses = HmApplication.class, sqlSessionTemplateRef = "hmSqlSessionTemplate")
 public class DSConfig {
 
+    @Primary
     @Bean(name = "hmDataSource")
     @ConfigurationProperties(prefix = "spring.dataSource")
     public DataSource hmDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
+    @Primary
     @Bean(name = "hmSqlSessionFactory")
     public SqlSessionFactory hamsterSqlSessionFactory() throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(hmDataSource());
         bean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources("classpath:mybatis/*.xml"));
         return bean.getObject();
     }
 
+    @Primary
     @Bean(name = "hmSqlSessionTemplate")
     public SqlSessionTemplate hamsterSqlSessionTemplate() throws Exception {
         return new SqlSessionTemplate(hamsterSqlSessionFactory());
     }
 
+    @Primary
     @Bean(name = "hmTransactionManager")
     public DataSourceTransactionManager hamsterTransactionManager() {
         return new DataSourceTransactionManager(hmDataSource());

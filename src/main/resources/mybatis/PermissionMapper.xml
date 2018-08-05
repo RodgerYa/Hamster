@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hamster.ak.user.mapper.PermissionMapper">
+<mapper namespace="com.hamster.ak.mapper.PermissionMapper">
 
-	<select id="select" resultType="com.hamster.ak.user.bean.PermissionBean">
+	<select id="select" resultType="com.hamster.ak.bean.PermissionBean">
 		select id,name from permission
 		where id=#{id,jdbcType=INTEGER}
 	</select>
 
-	<select id="selectAll" resultType="com.hamster.ak.user.bean.PermissionBean">
+	<select id="selectAll" resultType="com.hamster.ak.bean.PermissionBean">
 		select * from permission
 	</select>
 
