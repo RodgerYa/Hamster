@@ -2,6 +2,7 @@ package com.hamster.ak.common.config;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import com.hamster.ak.HmApplication;
+import com.hamster.ak.mapper.HmMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -21,8 +23,8 @@ import javax.sql.DataSource;
  */
 @SuppressWarnings({"AlibabaClassNamingShouldBeCamel"})
 @Configurable
-@MapperScan(basePackageClasses = HmApplication.class, sqlSessionTemplateRef = "hmSqlSessionTemplate")
-public class DSConfig {
+@MapperScan(basePackageClasses = HmMapper.class, sqlSessionTemplateRef = "hmSqlSessionTemplate")
+public class DsConfig {
 
     @Primary
     @Bean(name = "hmDataSource")
