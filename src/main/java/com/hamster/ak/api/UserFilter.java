@@ -11,6 +11,6 @@ import java.util.Optional;
 @Data
 @Builder
 public class UserFilter {
-    private Optional<String> userNameLike;
+    private Optional<String> nameLike;
     private Optional<String> loginNameLike;
 }

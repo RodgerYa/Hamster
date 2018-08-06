@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
                 .name(userCreation.getName())
                 .password(userCreation.getPassword())
                 .creator(userCreation.getName())
+                .modifier(userCreation.getName())
                 .build();
 
         if (userMapper.insert(userBean) != 1) {

@@ -8,7 +8,7 @@
     <select id="selectByLoginName" resultType="com.hamster.ak.bean.UserBean">
         select
         <include refid="base_column_list"/>
-        from user where loginname =#{loginNameLike}
+        from user where loginname =#{loginName}
     </select>
 
     <select id="selectById" resultType="com.hamster.ak.bean.UserBean">
@@ -19,17 +19,30 @@
 
     <insert id="insert">
         insert into user
-        <include refid="base_column_list"/>
+        (id, loginName, name, password, creator, modifier)
         values
         (
-        #{bean.id}, #{bean.loginNameLike}, #{bean.name}, #{bean.password}, #{bean.created},
-        #{bean.modified}, #{bean.creator}, #{bean.modifier}
+        #{bean.id}, #{bean.loginName}, #{bean.name}, #{bean.password}, #{bean.creator}, #{bean.modifier}
         )
     </insert>
 
     <update id="updatePassword">
-		update user set password =#{password}, modifier =#{oper} ,modified =#{modified}  where id =#{userId}
+		update user set password =#{password}, modifier =#{oper} where id =#{userId}
 	</update>
+
+    <update id="update">
+        update user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bean.name != null">
+                name = #{bean.name, jdbcType=VARCHAR},
+            </if>
+            <if test="bean.loginName != null">
+                loginname = #{bean.loginName, jdbcType=VARCHAR},
+            </if>
+            modifier=#{bean.modifier, jdbcType=VARCHAR}
+        </trim>
+        where id = #{bean.id, jdbcType=INTEGER}
+    </update>
 
     <delete id="deleteByUserId">
 		delete from user where id =#{userId, jdbcType=INTEGER}
