@@ -10,4 +10,10 @@ import org.springframework.stereotype.Component;
 public class HmProperties {
 
     private Integer expiryTime;
+
+    private String privateKey;
+
+    private String publicKey;
+
+    private String secret;
 }

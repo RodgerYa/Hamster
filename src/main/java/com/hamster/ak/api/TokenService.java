@@ -15,8 +15,9 @@ public interface TokenService {
 
     /**
      * 解码 + 验签
-     * @param values
+     *
+     * @param sign
      * @return
      */
-    Token decodeToken(String values);
+    Token decodeToken(String sign);
 }

@@ -2,6 +2,8 @@ package com.hamster.ak.impl;
 
 import com.hamster.ak.api.*;
 import com.hamster.ak.common.bean.Page;
+import com.hamster.ak.common.bean.ThreadLocalUser;
+import com.hamster.ak.common.config.HamsterTx;
 import com.hamster.ak.common.config.HmProperties;
 import com.hamster.ak.common.config.ModelConstant;
 import com.hamster.ak.common.exception.HmException;
@@ -11,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.util.Date;
 import java.util.Optional;
 
@@ -90,8 +93,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(Integer userId, String oldPassword, String newPassword) {
+    @HamsterTx
+    public void changePassword(UserChangePasswordForm form) {
+        Optional.of(ThreadLocalUser.getUser()).ifPresent(user -> {
+            if (!user.getId().equals(form.getUserId())) {
+                log.error("用户身份信息不匹配， LocalUser: [" + user.getId() + user.getName() +
+                        "], request User: [ id = " + form.getUserId() + "]");
+                throw new HmException("用户身份信息不匹配");
+            }
+        });
+        UserBean userBean = Optional.ofNullable(userMapper.selectById(form.getUserId())).orElseThrow(() ->
+                new HmException("用户不存在"));
 
+        // FIXME @yanwenbo 这里可以把用户密码解密出明文
+        if (!form.getOldPassword().equals(userBean.getPassword())) {
+            log.error("密码错误,oldPassword: " + userBean.getPassword() + ", inputPassword: " + form.getOldPassword());
+            throw new HmException("密码错误");
+        }
+        if (userMapper.updatePassword(form.getUserId(), form.getNewPassword(), userBean.getName()) != 1) {
+            throw new HmException("修改密码错误， 影响条数不为1");
+        }
     }
 
     @Override
