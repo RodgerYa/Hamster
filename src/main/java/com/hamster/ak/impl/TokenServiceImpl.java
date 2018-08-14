@@ -5,29 +5,17 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.auth0.jwt.impl.JWTParser;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.auth0.jwt.interfaces.JWTPartsParser;
-import com.auth0.jwt.interfaces.RSAKeyProvider;
-import com.google.common.collect.Maps;
 import com.hamster.ak.api.Token;
 import com.hamster.ak.api.TokenService;
 import com.hamster.ak.common.config.HmProperties;
 import com.hamster.ak.common.exception.HmException;
-import com.yan.AuthUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.security.KeyFactory;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -83,7 +71,7 @@ public class TokenServiceImpl implements TokenService {
 
         Map<String, Claim> claims = jwt.getClaims();
 
-        return Token.builder().expiration(claims.get("expeiration").asDate())
+        return Token.builder().expiration(claims.get("exp").asDate())
                 .userId(claims.get("userId").asInt())
                 .userName(claims.get("userName").asString())
                 .build();
