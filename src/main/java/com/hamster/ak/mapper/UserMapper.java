@@ -20,7 +20,7 @@ public interface UserMapper {
      * 更新密码
      */
     int updatePassword(@Param("userId") Integer userId, @Param("password") String password,
-                       @Param("oper") String oper, @Param("modified") Date modified);
+                       @Param("oper") String oper);
 
     /**
      * 更新密码外的其他字段

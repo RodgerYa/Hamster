@@ -1,30 +1,48 @@
 package com.hamster.ak.common.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yan.jackson.EnumModule;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Configuration
 public class WebConfig extends WebMvcConfigurationSupport {
-  @Autowired
-  HmAuthFilter hmAuthFilter;
 
-  @Bean
-  public FilterRegistrationBean authControlFilter() {
-    FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-    registrationBean.setFilter(hmAuthFilter);
-    List<String> urlPatterns = new ArrayList<String>();
-    urlPatterns.add("/users/*");
-    urlPatterns.add("/account/*");
-    urlPatterns.add("/bill/*");
-    registrationBean.setUrlPatterns(urlPatterns);
-    registrationBean.setOrder(10000);
-    return registrationBean;
+  @Autowired
+  private HmInterceptor hmInterceptor;
+
+  /**
+   * swagger-ui.html 静态资源映射
+   */
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry.addResourceHandler("/webjars*")
+            .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/META-INF/resources/").setCachePeriod(0);
   }
+
+  /**
+   * 请求过滤
+   */
+  @Override
+  protected void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(hmInterceptor).addPathPatterns("/**").excludePathPatterns("/api/user/login")
+            .excludePathPatterns("/swagger-resources/**", "/webjars*/**", "/swagger-ui*/**");
+  }
+
+  /**
+   * 枚举类型序列化与反序列化 传输过程使用 code
+   */
+  @Bean
+  public ObjectMapper objectMapper() {
+    ObjectMapper om = new ObjectMapper();
+    om.registerModule(new EnumModule("code"));
+    return om;
+  }
+
+
 }

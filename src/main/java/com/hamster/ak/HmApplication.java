@@ -2,7 +2,6 @@ package com.hamster.ak;
 
 import com.hamster.ak.mapper.HmMapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;

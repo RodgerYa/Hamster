@@ -34,6 +34,7 @@ create table if not exists assetsaccount (
   creator varchar(38) not null comment '创建人',
   modifier varchar(38) not null comment '修改人',
   modified datetime not null default current_timestamp on update current_timestamp comment '修改时间',
+  description text COMMENT '账户描述',
   primary key(id),
   unique key uk_useraccount(userid, name)
 )engine=innodb default charset=utf8mb4 comment '资产账户表'
@@ -44,12 +45,13 @@ create table if not exists liabilityaccount (
   name varchar(38) not null comment '账户名称',
   type int(11) not null comment '账户类型',
   lineofcredit int(20) not null default 0 comment '信用额度(分)',
-  statementdate datetime not null default current_timestamp comment '出账日期',
-  repaymentdate datetime not null default current_timestamp comment '还款日期',
+  statementdate int(11) not null default 1 comment '出账日期',
+  repaymentdate int(11) not null default 1 comment '还款日期',
   created datetime not null default current_timestamp comment '创建时间',
   creator varchar(38) not null comment '创建人',
   modifier varchar(38) not null comment '修改人',
   modified datetime not null default current_timestamp on update current_timestamp comment '修改时间',
+  description text COMMENT '账户描述',
   primary key(id),
   unique key uk_useraccount(userid, name)
 )engine=innodb default charset=utf8mb4 comment '负债账户表'

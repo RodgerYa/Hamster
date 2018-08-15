@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hamster.ak.mapper.LiabilityAccountMapper">
+
+    <sql id="base_column_list">
+        id, userid, name, type, lineofcredit, statementdate, repaymentdate, created, creator, modifier, modified
+    </sql>
+
+    <resultMap id="base_column_map" type="com.hamster.ak.bean.LiabilityAccountBean">
+        <id column="id" property="id" javaType="Integer"/>
+        <result column="userid" property="userId" javaType="Integer"/>
+        <result column="name" property="name" javaType="String"/>
+        <result column="type" property="type" javaType="com.hamster.ak.common.enumeration.AccountTypeEnum"/>
+        <result column="lineofcredit" property="lineOfCredit" javaType="Integer"/>
+        <result column="statementdate" property="statementDate" javaType="Integer"/>
+        <result column="repaymentdate" property="repaymentDate" javaType="Integer"/>
+        <result column="created" property="created" javaType="Date"/>
+        <result column="creator" property="creator" javaType="String"/>
+        <result column="modifier" property="modifier" javaType="String"/>
+        <result column="modified" property="modified" javaType="Date"/>
+    </resultMap>
+
+    <select id="selectList" resultMap="base_column_map">
+        select
+        <include refid="base_column_list"/>
+        from liabilityaccount
+    </select>
+
+    <select id="selectById" resultMap="base_column_map">
+        select
+        <include refid="base_column_list"/>
+        from liabilityaccount where id =#{id, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserIdAndName" resultMap="base_column_map">
+        select
+        <include refid="base_column_list"/>
+        from liabilityaccount where userid=#{userId, jdbcType=INTEGER} and name=#{name, jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" keyProperty="id" parameterType="com.hamster.ak.bean.LiabilityAccountBean" useGeneratedKeys="true">
+        insert into liabilityaccount
+        (userid,name,type,lineofcredit,statementdate,repaymentdate,creator,modifier)
+        values
+        (
+        #{bean.userId}, #{bean.name}, #{bean.type},#{bean.lineOfCredit}, #{bean.statementDate},#{bean.repaymentDate},#{bean.creator}, #{bean.modifier}
+        )
+    </insert>
+
+    <update id="update">
+        update liabilityaccountBean
+        <trim prefix="set" suffixOverrides=",">
+            <if test="bean.userid != null">
+                userid = #{bean.userid, jdbcType=Integer},
+            </if>
+            <if test="bean.type != null">
+                type = #{bean.type, jdbcType=Integer},
+            </if>
+            <if test="bean.name != null">
+                name = #{bean.name, jdbcType=VARCHAR},
+            </if>
+            <if test="bean.lineofcredit != null">
+                lineofcredit = #{bean.lineofcredit, jdbcType=INTEGER},
+            </if>
+            <if test="bean.repaymentdate != null">
+                repaymentdate = #{bean.repaymentdate, jdbcType=INTEGER},
+            </if>
+            <if test="bean.statementdate != null">
+                statementdate = #{bean.statementdate, jdbcType=INTEGER},
+            </if>
+            modifier=#{bean.modifier, jdbcType=VARCHAR}
+        </trim>
+        where id = #{bean.id, jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete">
+		delete from liabilityaccount where id =#{id, jdbcType=INTEGER}
+	</delete>
+</mapper>

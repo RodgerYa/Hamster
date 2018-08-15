@@ -19,4 +19,8 @@ public class Token {
 
     private Date expiration;
 
+    @Override
+    public String toString() {
+        return "[userId : " + userId + ", userName: " + userName + ", Expiration: " + expiration + "]";
+    }
 }

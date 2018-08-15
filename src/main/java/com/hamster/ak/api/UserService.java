@@ -37,15 +37,9 @@ public interface UserService {
     /**
      * 更改密码
      *
-     * @param userId not null
-     *
-     * @param oldPassword not null
-     *
-     * @param newPassword not null
-     *
      * @throws HmException
      */
-    void changePassword(Integer userId, String oldPassword, String newPassword);
+    void changePassword(UserChangePasswordForm form);
 
     /**
      * 删W除用户

@@ -10,6 +10,6 @@ import java.lang.annotation.*;
 @Inherited
 @Documented
 @Transactional(value = "hamsterTransactionManager", propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-public @interface hamsterTx {
+public @interface HamsterTx {
 
 }
