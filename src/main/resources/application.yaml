@@ -1,11 +1,12 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/hamster?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.jdbc.Driver
-    initialSize: 0
-    maxActive: 10
+    hm:
+      url: jdbc:mysql://localhost:3306/hamster?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.jdbc.Driver
+      initialSize: 0
+      maxActive: 10
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -20,3 +21,4 @@ hamster:
 
 mybatis:
   mapper-locations: classpath:mybatis/*.xml
+  type-handlers-package: com.hamster.ak.common.handler

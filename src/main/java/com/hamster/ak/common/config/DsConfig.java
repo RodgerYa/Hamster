@@ -10,6 +10,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -22,34 +23,35 @@ import javax.sql.DataSource;
  * @author yanwenbo
  */
 @SuppressWarnings({"AlibabaClassNamingShouldBeCamel"})
-@Configurable
-@MapperScan(basePackageClasses = HmMapper.class, sqlSessionTemplateRef = "hmSqlSessionTemplate")
+@Configuration
+@MapperScan(basePackageClasses = HmMapper.class, sqlSessionTemplateRef = "hamsterSqlSessionTemplate")
 public class DsConfig {
 
     @Primary
     @Bean(name = "hmDataSource")
-    @ConfigurationProperties(prefix = "spring.dataSource")
+    @ConfigurationProperties(prefix = "spring.datasource.hm")
     public DataSource hmDataSource() {
         return DruidDataSourceBuilder.create().build();
     }
 
     @Primary
-    @Bean(name = "hmSqlSessionFactory")
+    @Bean(name = "hamsterSqlSessionFactory")
     public SqlSessionFactory hamsterSqlSessionFactory() throws Exception {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(hmDataSource());
         bean.setMapperLocations(new PathMatchingResourcePatternResolver()
                 .getResources("classpath:mybatis/*.xml"));
         return bean.getObject();
     }
 
     @Primary
-    @Bean(name = "hmSqlSessionTemplate")
+    @Bean(name = "hamsterSqlSessionTemplate")
     public SqlSessionTemplate hamsterSqlSessionTemplate() throws Exception {
         return new SqlSessionTemplate(hamsterSqlSessionFactory());
     }
 
     @Primary
-    @Bean(name = "hmTransactionManager")
+    @Bean(name = "hamsterTransactionManager")
     public DataSourceTransactionManager hamsterTransactionManager() {
         return new DataSourceTransactionManager(hmDataSource());
     }
