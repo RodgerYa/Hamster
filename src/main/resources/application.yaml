@@ -21,4 +21,3 @@ hamster:
 
 mybatis:
   mapper-locations: classpath:mybatis/*.xml
-  type-handlers-package: com.hamster.ak.common.handler
