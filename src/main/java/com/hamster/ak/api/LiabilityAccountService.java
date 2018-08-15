@@ -14,7 +14,7 @@ public interface LiabilityAccountService {
      *
      * @return 账户id
      */
-    String create(LiabilityAccountCreation creation);
+    Integer create(LiabilityAccountCreation creation);
 
     /**
      * 更新负债账户
@@ -43,5 +43,5 @@ public interface LiabilityAccountService {
      *
      * @return 账户
      */
-    LiabilityAccount getAccountById(String id);
+    LiabilityAccount getAccountById(Integer id);
 }

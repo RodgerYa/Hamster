@@ -3,8 +3,10 @@ package com.hamster.ak.api;
 import com.hamster.ak.common.enumeration.AccountTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,26 +17,41 @@ import java.util.Date;
 @Data
 @Builder
 @ApiModel(value = "负债账户")
+@NoArgsConstructor
+@AllArgsConstructor
 public class LiabilityAccount {
 
     @ApiModelProperty(required = true, value = "账户id")
-    private String id;
+    private Integer id;
+
     @ApiModelProperty(required = true, value = "账户名称")
     private String name;
+
+    @ApiModelProperty(required = true, value = "用户id")
+    private Integer userId;
+
     @ApiModelProperty(required = true, value = "账户类型")
-    private AccountTypeEnum accountTypeEnum;
+    private AccountTypeEnum type;
+
     @ApiModelProperty(required = true, value = "信用额度")
     private Integer lineOfCredit;
+
+    // TODO @yanwenbo 出账日期/还款日期 不是日期类型
     @ApiModelProperty(required = true, value = "出账日期")
-    private Date statementDate;
+    private Integer statementDate;
+
     @ApiModelProperty(required = true, value = "还款日期")
-    private Date repaymentDate;
+    private Integer repaymentDate;
+
     @ApiModelProperty(required = true, value = "创建时间")
     private Date created;
+
     @ApiModelProperty(required = true, value = "账户人")
     private String creator;
+
     @ApiModelProperty(required = true, value = "修改人")
     private String modifier;
+
     @ApiModelProperty(required = true, value = "修改时间")
     private Date modified;
 }

@@ -10,9 +10,7 @@ import springfox.documentation.spring.web.json.Json;
 
 import javax.validation.Valid;
 
-import static com.hamster.ak.common.config.Routes.CHANGE_PASSWORD;
-import static com.hamster.ak.common.config.Routes.CREATE_USER;
-import static com.hamster.ak.common.config.Routes.LOGIN;
+import static com.hamster.ak.common.config.Routes.*;
 
 @RestController
 @Api(tags = "Hamster")
@@ -20,6 +18,9 @@ public class HmController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LiabilityAccountService liabilityAccountService;
 
     @ApiOperation(value = "新增用户")
     @PostMapping(CREATE_USER)
@@ -43,4 +44,20 @@ public class HmController {
         userService.changePassword(form);
         return JsonResult.ok();
     }
+
+    @ApiOperation(value = "负债账户-新增")
+    @PostMapping(CREATE_LIABILITY_ACCOUNT)
+    public JsonResult createLiabilityAccount(@RequestBody @Valid LiabilityAccountCreation creation) {
+        liabilityAccountService.create(creation);
+        return JsonResult.ok();
+    }
+
+    @ApiOperation(value = "负债账户-根据id查询")
+    @GetMapping(GET_LIABILITY_ACCOUNT)
+    public JsonResult<LiabilityAccount> getAccountById(@PathVariable("id") Integer id) {
+
+        return JsonResult.ok(liabilityAccountService.getAccountById(id));
+    }
+
+
 }
