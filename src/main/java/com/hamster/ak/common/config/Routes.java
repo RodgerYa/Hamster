@@ -19,6 +19,9 @@ public class Routes {
 
     public static final String CREATE_LIABILITY_ACCOUNT = "/api/account/liability/create";
     public static final String GET_LIABILITY_ACCOUNT = "/api/account/liability/{id}";
+    public static final String LIABILITY_ACCOUNT_LIST = "/api/account/liability/list";
+    public static final String UPDATE_LIABILITY_ACCOUNT = "/api/account/liability/update";
+    public static final String DELETE_LIABILITY_ACCOUNT = "/api/account/liability/delete/{id}";
 
     public static final String CREATE_BILL = "/api/bill/create";
     public static final String UPDATE_BILL = "/api/bill/update";

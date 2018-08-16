@@ -5,6 +5,7 @@ import com.yan.jackson.EnumModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -34,15 +35,6 @@ public class WebConfig extends WebMvcConfigurationSupport {
             .excludePathPatterns("/swagger-resources/**", "/webjars*/**", "/swagger-ui*/**");
   }
 
-  /**
-   * 枚举类型序列化与反序列化 传输过程使用 code
-   */
-  @Bean
-  public ObjectMapper objectMapper() {
-    ObjectMapper om = new ObjectMapper();
-    om.registerModule(new EnumModule("code"));
-    return om;
-  }
-
+  // TODO @yanwenbo 枚举类型序列化与反序列化 传输过程使用 code
 
 }

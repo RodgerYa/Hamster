@@ -20,7 +20,7 @@
         <result column="modified" property="modified" javaType="Date"/>
     </resultMap>
 
-    <select id="selectList" resultMap="base_column_map">
+    <select id="selectAll" resultMap="base_column_map">
         select
         <include refid="base_column_list"/>
         from liabilityaccount
@@ -48,25 +48,23 @@
     </insert>
 
     <update id="update">
-        update liabilityaccountBean
+        update liabilityaccount
         <trim prefix="set" suffixOverrides=",">
+--             userid 更新保留，预留家庭组账户 共享/转移 功能
             <if test="bean.userid != null">
                 userid = #{bean.userid, jdbcType=Integer},
-            </if>
-            <if test="bean.type != null">
-                type = #{bean.type, jdbcType=Integer},
             </if>
             <if test="bean.name != null">
                 name = #{bean.name, jdbcType=VARCHAR},
             </if>
             <if test="bean.lineofcredit != null">
-                lineofcredit = #{bean.lineofcredit, jdbcType=INTEGER},
+                lineofcredit = #{bean.lineOfCredit, jdbcType=INTEGER},
             </if>
             <if test="bean.repaymentdate != null">
-                repaymentdate = #{bean.repaymentdate, jdbcType=INTEGER},
+                repaymentdate = #{bean.repaymentDate, jdbcType=INTEGER},
             </if>
             <if test="bean.statementdate != null">
-                statementdate = #{bean.statementdate, jdbcType=INTEGER},
+                statementdate = #{bean.statementDate, jdbcType=INTEGER},
             </if>
             modifier=#{bean.modifier, jdbcType=VARCHAR}
         </trim>

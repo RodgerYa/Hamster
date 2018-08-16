@@ -19,16 +19,16 @@ public interface LiabilityAccountService {
     /**
      * 更新负债账户
      *
-     * @param account not null
+     * @param form not null
      */
-    void update(LiabilityAccount account);
+    Integer update(LiabilityAccountUpdateForm form);
 
     /**
      * 删除账户
      *
      * @param accountId not null
      */
-    void delete(String accountId);
+    void delete(Integer accountId);
 
     /**
      * 获取全部账户
