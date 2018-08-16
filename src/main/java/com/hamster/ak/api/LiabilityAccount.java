@@ -1,6 +1,6 @@
 package com.hamster.ak.api;
 
-import com.hamster.ak.common.enumeration.AccountTypeEnum;
+import com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -31,12 +30,11 @@ public class LiabilityAccount {
     private Integer userId;
 
     @ApiModelProperty(required = true, value = "账户类型")
-    private AccountTypeEnum type;
+    private LiabilityAccountTypeEnum type;
 
     @ApiModelProperty(required = true, value = "信用额度")
     private Integer lineOfCredit;
 
-    // TODO @yanwenbo 出账日期/还款日期 不是日期类型
     @ApiModelProperty(required = true, value = "出账日期")
     private Integer statementDate;
 

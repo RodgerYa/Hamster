@@ -15,7 +15,7 @@ public interface LiabilityAccountMapper {
 
     public LiabilityAccountBean selectByUserIdAndName(@Param("userId") Integer userId, @Param("name") String name);
 
-    public int update(@Param("bean") LiabilityAccountBean bean);
+    public Integer update(@Param("bean") LiabilityAccountBean bean);
 
     public void delete(@Param("id") Integer id);
 

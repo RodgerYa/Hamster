@@ -1,14 +1,11 @@
 package com.hamster.ak.api;
 
-import com.hamster.ak.common.enumeration.AccountTypeEnum;
+import com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -20,7 +17,7 @@ public class LiabilityAccountCreation {
 
     @ApiParam(value = "账户类型", required = true)
     @NotNull
-    private AccountTypeEnum type;
+    private LiabilityAccountTypeEnum type;
 
     @ApiParam(value = "账户名称", required = true)
     @NotNull
@@ -39,5 +36,5 @@ public class LiabilityAccountCreation {
     private Integer statementDate;
 
     @ApiParam(value = "账户类型", required = true)
-    private Optional<String> description;
+    private Optional<String> description = Optional.empty();
 }

@@ -10,6 +10,8 @@ import springfox.documentation.spring.web.json.Json;
 
 import javax.validation.Valid;
 
+import java.util.List;
+
 import static com.hamster.ak.common.config.Routes.*;
 
 @RestController
@@ -27,7 +29,6 @@ public class HmController {
     public JsonResult createUser(@RequestBody @Valid UserCreation userCreation) {
 
         userService.create(userCreation);
-
         return JsonResult.ok();
     }
 
@@ -41,6 +42,7 @@ public class HmController {
     @ApiOperation(value = "修改密码")
     @PostMapping(CHANGE_PASSWORD)
     public JsonResult changePassword(@RequestBody @Valid UserChangePasswordForm form) {
+
         userService.changePassword(form);
         return JsonResult.ok();
     }
@@ -48,6 +50,7 @@ public class HmController {
     @ApiOperation(value = "负债账户-新增")
     @PostMapping(CREATE_LIABILITY_ACCOUNT)
     public JsonResult createLiabilityAccount(@RequestBody @Valid LiabilityAccountCreation creation) {
+
         liabilityAccountService.create(creation);
         return JsonResult.ok();
     }
@@ -57,6 +60,31 @@ public class HmController {
     public JsonResult<LiabilityAccount> getAccountById(@PathVariable("id") Integer id) {
 
         return JsonResult.ok(liabilityAccountService.getAccountById(id));
+    }
+
+    @ApiOperation(value = "负债账户-查询列表")
+    @GetMapping(LIABILITY_ACCOUNT_LIST)
+    public JsonResult<List<LiabilityAccount>> queryLiabilityAccountList() {
+
+        return JsonResult.ok(liabilityAccountService.getAccounts());
+    }
+
+    @ApiOperation(value = "负债账户-更新")
+    @PatchMapping(UPDATE_LIABILITY_ACCOUNT)
+    // FIXME @yanwenbo 尝试使用 @PatchMapping
+    public JsonResult updateLiabilityAccount(@RequestBody @Valid LiabilityAccountUpdateForm account) {
+
+        liabilityAccountService.update(account);
+        return JsonResult.ok();
+    }
+
+    @ApiOperation(value = "负债账户-删除")
+    @DeleteMapping(DELETE_LIABILITY_ACCOUNT)
+//    FIXME @yanwenbo 尝试使用 @DeleteMapping
+    public JsonResult deleteLiabilityAccount(@PathVariable("id") Integer id) {
+
+        liabilityAccountService.delete(id);
+        return JsonResult.ok();
     }
 
 

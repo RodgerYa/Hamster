@@ -1,14 +1,18 @@
 package com.hamster.ak.bean;
 
-import com.hamster.ak.common.enumeration.AccountTypeEnum;
+import com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.Optional;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class LiabilityAccountBean {
 
     private Integer id;
@@ -17,7 +21,7 @@ public class LiabilityAccountBean {
 
     private String name;
 
-    private AccountTypeEnum type;
+    private LiabilityAccountTypeEnum type;
 
     private Integer lineOfCredit;
 
@@ -33,6 +37,6 @@ public class LiabilityAccountBean {
 
     private Date modified;
 
-    private Optional<String> description;
+    private String description;
 
 }
