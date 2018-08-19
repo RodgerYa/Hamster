@@ -9,7 +9,7 @@ account keeping 记账本
 
 - 合作开发者，提交时若远程仓库没有对应远程分支，可使用`git push --set-upstream origin 分支名` 在远端新建对应分支，提交使用 `git push origin/分支名` 即可
 
-## app端说明
+** app端说明 **
 - 初期采取前后端代码分离的方式管理，app代码存放在 [hamster-app][1] 仓库中，分开开发，分支分开管理。
 
 [1]: https://github.com/yanwbo/Hamster-app
