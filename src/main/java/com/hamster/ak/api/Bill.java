@@ -16,5 +16,4 @@ public class Bill {
     private BigDecimal expenditure;
     private BigDecimal income;
     private List<BillItem> billItemList;
-
 }

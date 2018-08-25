@@ -10,7 +10,7 @@
         <id column="id" property="id" javaType="Integer"/>
         <result column="userid" property="userId" javaType="Integer"/>
         <result column="name" property="name" javaType="String"/>
-        <result column="type" property="type" javaType="com.hamster.ak.common.enumeration.AccountTypeEnum"/>
+        <result column="type" property="type" javaType="com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum"/>
         <result column="lineofcredit" property="lineOfCredit" javaType="Integer"/>
         <result column="statementdate" property="statementDate" javaType="Integer"/>
         <result column="repaymentdate" property="repaymentDate" javaType="Integer"/>
@@ -36,6 +36,18 @@
         select
         <include refid="base_column_list"/>
         from liabilityaccount where userid=#{userId, jdbcType=INTEGER} and name=#{name, jdbcType=INTEGER}
+    </select>
+
+    <select id="selectRepaymentList" resultMap="base_column_map">
+        select <include refid="base_column_list"/>
+        from liabilityaccount
+        where repaymentdate = DAY(CURRENT_DATE)
+    </select>
+
+    <select id="selectStatementList" resultMap="base_column_map">
+        select <include refid="base_column_list"/>
+        from liabilityaccount
+        where statementdate = DAY(CURRENT_DATE)
     </select>
 
     <insert id="insert" keyProperty="id" parameterType="com.hamster.ak.bean.LiabilityAccountBean" useGeneratedKeys="true">

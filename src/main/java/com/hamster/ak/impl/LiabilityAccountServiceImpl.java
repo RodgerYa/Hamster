@@ -1,12 +1,11 @@
 package com.hamster.ak.impl;
 
-import com.hamster.ak.api.LiabilityAccount;
-import com.hamster.ak.api.LiabilityAccountCreation;
-import com.hamster.ak.api.LiabilityAccountService;
-import com.hamster.ak.api.LiabilityAccountUpdateForm;
+import com.hamster.ak.api.*;
+import com.hamster.ak.bean.LiabilityAccountBean;
 import com.hamster.ak.common.bean.ThreadLocalUser;
 import com.hamster.ak.common.config.HamsterTx;
 import com.hamster.ak.common.exception.HmException;
+import com.hamster.ak.common.web.WebSocketServer;
 import com.hamster.ak.mapper.LiabilityAccountMapper;
 import com.hamster.ak.transfer.LiabilityAccountTransfer;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -25,6 +25,9 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
 
     @Autowired
     private LiabilityAccountTransfer liabilityAccountTransfer;
+
+    @Autowired
+    private WebSocketServer webSocketServer;
 
     @Override
     @HamsterTx
@@ -76,5 +79,23 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
         return liabilityAccountTransfer.transferToLiabilityAccount(
                 Optional.ofNullable(liabilityAccountMapper.selectById(id)).orElseThrow(() ->
                         new HmException("当前负债账户不存在")));
+    }
+
+    @Override
+    public void remind() {
+        List<LiabilityAccountBean> repaymentList = liabilityAccountMapper.selectRepaymentList();
+
+        List<LiabilityAccountBean> statementList = liabilityAccountMapper.selectStatementList();
+
+        Map<Integer, RemindersVO> repaymentMap = liabilityAccountTransfer.transferToRepaymentReminders(repaymentList);
+
+        Map<Integer, RemindersVO> statementMap = liabilityAccountTransfer.transferToStatementReminders(statementList);
+
+        if (repaymentMap.size() > 0) {
+            webSocketServer.sendMessage(repaymentMap);
+        }
+        if (statementMap.size() > 0) {
+            webSocketServer.sendMessage(statementMap);
+        }
     }
 }
