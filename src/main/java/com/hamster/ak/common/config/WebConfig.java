@@ -1,9 +1,8 @@
-package com.hamster.ak.common.web;
+package com.hamster.ak.common.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yan.jackson.EnumModule;
+import com.hamster.ak.common.web.CustomFomatterRegistrar;
+import com.hamster.ak.common.web.HmInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -31,10 +30,13 @@ public class WebConfig extends WebMvcConfigurationSupport {
    */
   @Override
   protected void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(hmInterceptor).addPathPatterns("/**").excludePathPatterns("/api/user/login")
+    registry.addInterceptor(hmInterceptor).addPathPatterns("/**").excludePathPatterns("/api/user/login", "/notify")
             .excludePathPatterns("/swagger-resources/**", "/webjars*/**", "/swagger-ui*/**");
   }
 
   // TODO @yanwenbo 枚举类型序列化与反序列化 传输过程使用 code
-
+  @Override
+  protected void addFormatters(FormatterRegistry registry) {
+    new CustomFomatterRegistrar("code").registerFormatters(registry);
+  }
 }

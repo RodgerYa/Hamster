@@ -1,15 +1,14 @@
 package com.hamster.ak.transfer;
 
-import com.hamster.ak.api.LiabilityAccount;
-import com.hamster.ak.api.LiabilityAccountCreation;
-import com.hamster.ak.api.LiabilityAccountUpdateForm;
-import com.hamster.ak.api.User;
+import com.google.common.collect.Maps;
+import com.hamster.ak.api.*;
 import com.hamster.ak.bean.LiabilityAccountBean;
 import com.hamster.ak.common.bean.ThreadLocalUser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
@@ -67,5 +66,25 @@ public class LiabilityAccountTransfer {
                         .build()
         ).collect(Collectors.toList());
 
+    }
+
+    public Map<Integer, RemindersVO> transferToRepaymentReminders(List<LiabilityAccountBean> repaymentList) {
+        return repaymentList.stream().collect(Collectors.toMap(LiabilityAccountBean::getUserId, item ->
+                RemindersVO.builder().accountId(item.getId())
+                        .accountName(item.getName())
+                        .amount(item.getAmount())
+                        .lineOfCredit(item.getLineOfCredit())
+                        .repayment(true)
+                        .build()));
+    }
+
+    public Map<Integer, RemindersVO> transferToStatementReminders(List<LiabilityAccountBean> statementList) {
+        return statementList.stream().collect(Collectors.toMap(LiabilityAccountBean::getUserId, item ->
+                RemindersVO.builder().accountId(item.getId())
+                        .accountName(item.getName())
+                        .amount(item.getAmount())
+                        .lineOfCredit(item.getLineOfCredit())
+                        .statement(true)
+                        .build()));
     }
 }

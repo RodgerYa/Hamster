@@ -1,8 +1,11 @@
 package com.hamster.ak.api;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @author yanwenbo
  */
+@Service
 public interface TokenService {
 
     /**

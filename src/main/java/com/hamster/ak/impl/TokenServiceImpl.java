@@ -56,7 +56,10 @@ public class TokenServiceImpl implements TokenService {
             log.error("token 不存在");
             throw new HmException("token 不存在");
         }
-        JWTVerifier verifier = JWT.require(Algorithm.HMAC256(hmProperties.getSecret())).build();
+        if (hmProperties == null) {
+            hmProperties = new HmProperties();
+        }
+        JWTVerifier verifier = JWT.require(Algorithm.HMAC256("RfuUZH7SnjvXbwen7joNmbLKCdfEFbDZBRKxldBfZIcuZ")).build();
         DecodedJWT jwt = null;
 
         try {

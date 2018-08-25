@@ -44,7 +44,7 @@ public class HmInterceptor extends HandlerInterceptorAdapter {
             Token token = tokenService.decodeToken(tokenStr);
 
             // 这里需要注意存储在 threadLocal 中的 user 仅有 id/name 两个属性
-            // FIXME @yanwenbo oncePerRequest 在 HandleInterceptorAdapter之前
+            // FIXME @yanwenbo oncePerRequest、RequestListener、webSocket 都在 HandleInterceptorAdapter之前
             ThreadLocalUser.setUser(User.builder()
                     .id(token.getUserId())
                     .name(token.getUserName()).build());
