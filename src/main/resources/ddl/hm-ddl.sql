@@ -62,6 +62,7 @@ create table if not exists billitem (
   userid int(11) not null comment '用户id',
   accountid int(11) not null comment '账户id',
   fromassetsaccount boolean not null comment '是否来源于资产账户',
+  isincome boolean not null default false comment '是否是收入',
   costtype int(11) not null comment '消费类型',
   amount int(20) not null comment '记账金额（分）',
   created datetime not null default current_timestamp comment '创建时间',
