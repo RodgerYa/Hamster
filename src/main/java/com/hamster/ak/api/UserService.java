@@ -35,6 +35,11 @@ public interface UserService {
     LoginResult login(UserCredential credential);
 
     /**
+     * 注销登录
+     */
+    void loginOut();
+
+    /**
      * 更改密码
      *
      * @throws HmException

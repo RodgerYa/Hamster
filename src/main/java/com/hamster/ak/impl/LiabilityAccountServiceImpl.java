@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static com.hamster.ak.common.exception.HmError.*;
+
 @Component
 @Slf4j
 public class LiabilityAccountServiceImpl implements LiabilityAccountService {
@@ -34,10 +36,10 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
     public Integer create(LiabilityAccountCreation creation) {
 
         Optional.ofNullable(liabilityAccountMapper.selectByUserIdAndName(ThreadLocalUser.getUser().getId(),
-                creation.getName())).orElseThrow(() -> new HmException("当前负债账户已存在"));
+                creation.getName())).orElseThrow(() -> new HmException(ACCOUNT_EXISTED));
 
         return Optional.ofNullable(liabilityAccountMapper.insert(liabilityAccountTransfer
-                .transferTOLiabilityAccountBean(creation))).orElseThrow(() -> new HmException("新增负债账户失败"));
+                .transferTOLiabilityAccountBean(creation))).orElseThrow(() -> new HmException(ADD_FAIL));
     }
 
     @Override
@@ -46,22 +48,22 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
 
         Integer accountId = Optional.ofNullable(
                 liabilityAccountMapper.selectByUserIdAndName(ThreadLocalUser.getUser().getId(), account.getOldName())
-        ).orElseThrow(() -> new HmException("负债账户[" + account.getOldName() + "]不存在")).getId();
+        ).orElseThrow(() -> new HmException(ACCOUNT_NOT_EXIST)).getId();
 
         return Optional.ofNullable(liabilityAccountMapper.update(liabilityAccountTransfer
                 .transferTOLiabilityAccountBean(accountId, account))).orElseThrow(() ->
-                new HmException("更新负债账户[" + account.getOldName() + "]失败"));
+                new HmException(UPDATE_FAIL));
     }
 
     @Override
     @HamsterTx
     public void delete(Integer accountId) {
         Optional.ofNullable(liabilityAccountMapper.selectById(accountId)).orElseThrow(() ->
-                new HmException("负债账户[id: " + accountId + "]不存在"));
+                new HmException(ACCOUNT_NOT_EXIST));
         try {
             liabilityAccountMapper.delete(accountId);
         } catch (Exception e) {
-            throw new HmException("删除账户[id:" + accountId + "]失败");
+            throw new HmException(DELETE_FAIL);
         }
 
     }
@@ -70,7 +72,7 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
     public List<LiabilityAccount> getAccounts() {
         return liabilityAccountTransfer.transferToLiabilityLists(
                 Optional.ofNullable(liabilityAccountMapper.selectAll()).orElseThrow(() ->
-                        new HmException("负债账户列表查询失败")));
+                        new HmException(QUERY_RESULT_EMPTY)));
     }
 
     @Override
@@ -78,7 +80,7 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
 
         return liabilityAccountTransfer.transferToLiabilityAccount(
                 Optional.ofNullable(liabilityAccountMapper.selectById(id)).orElseThrow(() ->
-                        new HmException("当前负债账户不存在")));
+                        new HmException(ACCOUNT_NOT_EXIST)));
     }
 
     @Override

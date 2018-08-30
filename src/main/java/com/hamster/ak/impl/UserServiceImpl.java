@@ -8,6 +8,7 @@ import com.hamster.ak.common.config.HamsterTx;
 import com.hamster.ak.common.config.HmProperties;
 import com.hamster.ak.common.config.ModelConstant;
 import com.hamster.ak.common.exception.HmException;
+import com.hamster.ak.common.web.WebSocketServer;
 import com.hamster.ak.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Optional;
+
+import static com.hamster.ak.common.exception.HmError.*;
 
 @Slf4j
 @Component
@@ -33,12 +36,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private LiabilityAccountService liabilityAccountService;
 
+    @Autowired
+    private WebSocketServer webSocketServer;
+
     @Override
     public Integer create(UserCreation userCreation) {
 
         Optional.ofNullable(userMapper.selectByLoginName(userCreation.getLoginName())).ifPresent(u -> {
             log.error("用户(loginName)" + u.getLoginName() + "已存在");
-            throw new HmException("当前用户已存在，不可重复注册");
+            throw new HmException(USER_EXISTED);
         });
 
         UserBean userBean = UserBean.builder()
@@ -51,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
         if (userMapper.insert(userBean) != 1) {
             log.error("新建用户(loginName)" + userCreation.getLoginName() + "失败，插入条数不为1");
-            throw new HmException("新建用户失败");
+            throw new HmException(ADD_FAIL);
         }
 
         return userMapper.selectByLoginName(userCreation.getLoginName()).getId();
@@ -68,18 +74,18 @@ public class UserServiceImpl implements UserService {
                         .modifier(userBean.getModifier())
                         .creator(userBean.getCreator())
                         .created(userBean.getCreated()).build()
-        ).orElseThrow(() -> new HmException("用户不存在"));
+        ).orElseThrow(() -> new HmException(USER_NOT_EXIST));
     }
 
     @Override
     public LoginResult login(UserCredential credential) {
 
         UserBean userBean = userMapper.selectByLoginName(credential.getLoginName());
-        Optional.ofNullable(userBean).orElseThrow(() -> new HmException("登陆失败，当前用户不存在"));
+        Optional.ofNullable(userBean).orElseThrow(() -> new HmException(USER_NOT_EXIST));
 
         if (!userBean.getPassword().equals(credential.getPassword())) {
             log.error("密码错误");
-            throw new HmException("密码错误");
+            throw new HmException(PASSWORD_WRONG);
         }
 
         String token = tokenService.encodeToken(Token.builder()
@@ -101,25 +107,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void loginOut() {
+        User user = Optional.ofNullable(ThreadLocalUser.getUser()).orElseThrow(() -> new HmException(USER_NOT_LOGIN));
+        webSocketServer.onClose();
+    }
+
+    @Override
     @HamsterTx
     public void changePassword(UserChangePasswordForm form) {
         Optional.of(ThreadLocalUser.getUser()).ifPresent(user -> {
             if (!user.getId().equals(form.getUserId())) {
                 log.error("用户身份信息不匹配， LocalUser: [" + user.getId() + user.getName() +
                         "], request User: [ id = " + form.getUserId() + "]");
-                throw new HmException("用户身份信息不匹配");
+                throw new HmException(USER_NOT_LOGIN);
             }
         });
         UserBean userBean = Optional.ofNullable(userMapper.selectById(form.getUserId())).orElseThrow(() ->
-                new HmException("用户不存在"));
+                new HmException(USER_NOT_EXIST));
 
         // FIXME @yanwenbo 这里可以把用户密码解密出明文
+
         if (!form.getOldPassword().equals(userBean.getPassword())) {
             log.error("密码错误,oldPassword: " + userBean.getPassword() + ", inputPassword: " + form.getOldPassword());
-            throw new HmException("密码错误");
+            throw new HmException(PASSWORD_WRONG);
         }
         if (userMapper.updatePassword(form.getUserId(), form.getNewPassword(), userBean.getName()) != 1) {
-            throw new HmException("修改密码错误， 影响条数不为1");
+            throw new HmException(UPDATE_FAIL);
         }
     }
 

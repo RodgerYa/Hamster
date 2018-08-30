@@ -1,6 +1,7 @@
 package com.hamster.ak.common.bean;
 
 import com.hamster.ak.common.config.ModelConstant;
+import com.hamster.ak.common.exception.HmException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,10 +20,12 @@ import java.util.Optional;
 public class JsonResult<T> {
 
     private Integer code;
+
     private String message;
 
     @Builder.Default
     private Boolean success = false;
+
     private Optional<T> data = Optional.empty();
 
     public static JsonResult systemError() {
@@ -32,6 +35,13 @@ public class JsonResult<T> {
                 .build();
     }
 
+
+    public static JsonResult fail(HmException ex) {
+        return JsonResult.builder()
+                .code(ex.getCode())
+                .message(ex.getMessage())
+                .build();
+    }
 
     public static JsonResult fail(String msg) {
         return JsonResult.builder()
