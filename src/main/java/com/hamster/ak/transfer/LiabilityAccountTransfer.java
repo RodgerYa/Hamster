@@ -1,6 +1,5 @@
 package com.hamster.ak.transfer;
 
-import com.google.common.collect.Maps;
 import com.hamster.ak.api.*;
 import com.hamster.ak.bean.LiabilityAccountBean;
 import com.hamster.ak.common.bean.ThreadLocalUser;
@@ -72,7 +71,8 @@ public class LiabilityAccountTransfer {
         return repaymentList.stream().collect(Collectors.toMap(LiabilityAccountBean::getUserId, item ->
                 RemindersVO.builder().accountId(item.getId())
                         .accountName(item.getName())
-                        .amount(item.getAmount())
+                        // TODO @yanwenbo 该字段不存储在实体中，通过统计账户月账单，统计出当月已使用金额
+                        .amount(0)
                         .lineOfCredit(item.getLineOfCredit())
                         .repayment(true)
                         .build()));
@@ -82,7 +82,7 @@ public class LiabilityAccountTransfer {
         return statementList.stream().collect(Collectors.toMap(LiabilityAccountBean::getUserId, item ->
                 RemindersVO.builder().accountId(item.getId())
                         .accountName(item.getName())
-                        .amount(item.getAmount())
+                        .amount(0)
                         .lineOfCredit(item.getLineOfCredit())
                         .statement(true)
                         .build()));

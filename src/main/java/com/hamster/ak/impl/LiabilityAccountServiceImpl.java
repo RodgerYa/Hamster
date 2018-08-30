@@ -98,4 +98,20 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
             webSocketServer.sendMessage(statementMap);
         }
     }
+
+    @Override
+    public void remind(Integer userId) {
+        List<LiabilityAccountBean> repaymentList = liabilityAccountMapper.selectUserRepaymentList(userId);
+
+        List<LiabilityAccountBean> statementList = liabilityAccountMapper.selectUserStatementList(userId);
+
+        if (repaymentList.size() > 0) {
+            Map<Integer, RemindersVO> repaymentMap = liabilityAccountTransfer.transferToRepaymentReminders(repaymentList);
+            webSocketServer.sendMessage(repaymentMap);
+        }
+        if (statementList.size() > 0) {
+            Map<Integer, RemindersVO> statementMap = liabilityAccountTransfer.transferToStatementReminders(statementList);
+            webSocketServer.sendMessage(statementMap);
+        }
+    }
 }

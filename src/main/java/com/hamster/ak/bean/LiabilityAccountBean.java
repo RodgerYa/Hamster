@@ -25,7 +25,7 @@ public class LiabilityAccountBean {
 
     private Integer lineOfCredit;
 
-    private Integer amount;
+    private Integer totalCost;
 
     private Integer statementDate;
 

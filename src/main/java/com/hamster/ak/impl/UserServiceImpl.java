@@ -1,13 +1,13 @@
 package com.hamster.ak.impl;
 
 import com.hamster.ak.api.*;
+import com.hamster.ak.bean.UserBean;
 import com.hamster.ak.common.bean.Page;
 import com.hamster.ak.common.bean.ThreadLocalUser;
 import com.hamster.ak.common.config.HamsterTx;
 import com.hamster.ak.common.config.HmProperties;
 import com.hamster.ak.common.config.ModelConstant;
 import com.hamster.ak.common.exception.HmException;
-import com.hamster.ak.bean.UserBean;
 import com.hamster.ak.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DateUtils;
@@ -29,6 +29,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private LiabilityAccountService liabilityAccountService;
 
     @Override
     public Integer create(UserCreation userCreation) {
@@ -83,7 +86,12 @@ public class UserServiceImpl implements UserService {
                 .userId(userBean.getId())
                 .userName(userBean.getName())
                 .expiration(DateUtils.addHours(new Date(), hmProperties.getExpiryTime())).build());
-
+        try {
+            liabilityAccountService.remind(userBean.getId());
+        } catch (Exception e) {
+            log.error("用户登录后提醒失败");
+            e.printStackTrace();
+        }
         return LoginResult.builder().userId(userBean.getId())
                 .loginName(userBean.getLoginName())
                 .accepted(true)

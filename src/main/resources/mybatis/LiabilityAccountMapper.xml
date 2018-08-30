@@ -44,10 +44,22 @@
         where repaymentdate = DAY(CURRENT_DATE)
     </select>
 
+    <select id="selectUserRepaymentList" resultMap="base_column_map">
+        select <include refid="base_column_list"/>
+        from liabilityaccount
+        where userid=#{userId, jdbcType=INTEGER} and repaymentdate = DAY(CURRENT_DATE)
+    </select>
+
     <select id="selectStatementList" resultMap="base_column_map">
         select <include refid="base_column_list"/>
         from liabilityaccount
         where statementdate = DAY(CURRENT_DATE)
+    </select>
+
+    <select id="selectUserStatementList" resultMap="base_column_map">
+        select <include refid="base_column_list"/>
+        from liabilityaccount
+        where userid=#{userId, jdbcType=INTEGER} and statementdate = DAY(CURRENT_DATE)
     </select>
 
     <insert id="insert" keyProperty="id" parameterType="com.hamster.ak.bean.LiabilityAccountBean" useGeneratedKeys="true">
