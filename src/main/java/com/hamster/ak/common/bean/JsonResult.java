@@ -20,6 +20,9 @@ public class JsonResult<T> {
 
     private Integer code;
     private String message;
+
+    @Builder.Default
+    private Boolean success = false;
     private Optional<T> data = Optional.empty();
 
     public static JsonResult systemError() {
@@ -39,6 +42,7 @@ public class JsonResult<T> {
 
     public static JsonResult ok() {
         return JsonResult.builder()
+                .success(true)
                 .code(HttpStatus.OK.value())
                 .message(ModelConstant.REQUEST_SUCCESS_MSG)
                 .build();
@@ -49,6 +53,7 @@ public class JsonResult<T> {
         result.setCode(HttpStatus.OK.value());
         result.setMessage(ModelConstant.REQUEST_SUCCESS_MSG);
         result.setData(Optional.of(data));
+        result.setSuccess(true);
         return result;
     }
 }

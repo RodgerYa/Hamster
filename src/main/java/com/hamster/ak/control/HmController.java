@@ -1,5 +1,6 @@
 package com.hamster.ak.control;
 
+import com.google.common.collect.Lists;
 import com.hamster.ak.api.*;
 import com.hamster.ak.common.bean.JsonResult;
 import io.swagger.annotations.Api;
@@ -84,5 +85,11 @@ public class HmController {
 
         liabilityAccountService.delete(id);
         return JsonResult.ok();
+    }
+
+    @ApiOperation(value = "用户账单列表")
+    @GetMapping(BILL_LIST)
+    public JsonResult getBillList() {
+        return JsonResult.ok(Lists.newArrayList());
     }
 }

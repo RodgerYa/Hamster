@@ -35,8 +35,8 @@ public class LiabilityAccount {
     @ApiModelProperty(required = true, value = "信用额度")
     private Integer lineOfCredit;
 
-    @ApiModelProperty(required = true, value = "已使用金额")
-    private Integer amount;
+    @ApiModelProperty(required = true, value = "账户累计流出")
+    private Integer totalCost;
 
     @ApiModelProperty(required = true, value = "出账日期")
     private Integer statementDate;

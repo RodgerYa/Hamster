@@ -25,4 +25,8 @@ public interface LiabilityAccountMapper {
     public List<LiabilityAccountBean> selectRepaymentList();
 
     public List<LiabilityAccountBean> selectStatementList();
+
+    public List<LiabilityAccountBean> selectUserRepaymentList(@Param("userId") Integer userId);
+
+    public List<LiabilityAccountBean> selectUserStatementList(@Param("userId") Integer userId);
 }

@@ -49,4 +49,9 @@ public interface LiabilityAccountService {
      * 出账日/还款日 提醒
      */
     void remind();
+
+    /**
+     * 出账日/还款日 提醒
+     */
+    void remind(Integer userId);
 }

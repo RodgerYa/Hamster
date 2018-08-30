@@ -35,6 +35,6 @@ public class LiabilityAccountCreation {
     @NotNull
     private Integer statementDate;
 
-    @ApiParam(value = "账户类型", required = true)
+    @ApiParam(value = "账户描述", required = true)
     private Optional<String> description = Optional.empty();
 }
