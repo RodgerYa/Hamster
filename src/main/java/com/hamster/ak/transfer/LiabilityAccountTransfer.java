@@ -56,12 +56,15 @@ public class LiabilityAccountTransfer {
                         .userId(bean.getUserId())
                         .type(bean.getType())
                         .lineOfCredit(bean.getLineOfCredit())
+                        .amount(bean.getAmount())
+                        .totalCost(bean.getTotalCost())
                         .statementDate(bean.getStatementDate())
                         .repaymentDate(bean.getRepaymentDate())
                         .created(bean.getCreated())
                         .creator(bean.getCreator())
                         .modified(bean.getModified())
                         .modifier(bean.getModifier())
+                        .description(bean.getDescription())
                         .build()
         ).collect(Collectors.toList());
 

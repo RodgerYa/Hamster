@@ -3,7 +3,7 @@
 <mapper namespace="com.hamster.ak.mapper.LiabilityAccountMapper">
 
     <sql id="base_column_list">
-        id, userid, name, type, lineofcredit, statementdate, repaymentdate, created, creator, modifier, modified
+        id, userid, name, type, lineofcredit, totalCost, amount, statementdate, repaymentdate, created, creator, modifier, modified, description
     </sql>
 
     <resultMap id="base_column_map" type="com.hamster.ak.bean.LiabilityAccountBean">
@@ -12,18 +12,21 @@
         <result column="name" property="name" javaType="String"/>
         <result column="type" property="type" javaType="com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum"/>
         <result column="lineofcredit" property="lineOfCredit" javaType="Integer"/>
+        <result column="totalCost" property="totalCost" javaType="Integer"/>
+        <result column="amount" property="amount" javaType="Integer"/>
         <result column="statementdate" property="statementDate" javaType="Integer"/>
         <result column="repaymentdate" property="repaymentDate" javaType="Integer"/>
         <result column="created" property="created" javaType="Date"/>
         <result column="creator" property="creator" javaType="String"/>
         <result column="modifier" property="modifier" javaType="String"/>
         <result column="modified" property="modified" javaType="Date"/>
+        <result column="description" property="description" javaType="String"/>
     </resultMap>
 
     <select id="selectAll" resultMap="base_column_map">
         select
         <include refid="base_column_list"/>
-        from liabilityaccount
+        from liabilityaccount where userId=#{userId, jdbcType=INTEGER}
     </select>
 
     <select id="selectById" resultMap="base_column_map">

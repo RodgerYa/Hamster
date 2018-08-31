@@ -70,9 +70,9 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
 
     @Override
     public List<LiabilityAccount> getAccounts() {
-        return liabilityAccountTransfer.transferToLiabilityLists(
-                Optional.ofNullable(liabilityAccountMapper.selectAll()).orElseThrow(() ->
-                        new HmException(QUERY_RESULT_EMPTY)));
+        return liabilityAccountTransfer.transferToLiabilityLists(liabilityAccountMapper.selectAll(
+                Optional.ofNullable(ThreadLocalUser.getUser()).orElseThrow(() ->
+                        new HmException(USER_NOT_EXIST)).getId()));
     }
 
     @Override

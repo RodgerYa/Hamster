@@ -38,6 +38,9 @@ public class LiabilityAccount {
     @ApiModelProperty(required = true, value = "账户累计流出")
     private Integer totalCost;
 
+    @ApiModelProperty(required = true, value = "账户未还款金额（分）")
+    private Integer amount;
+
     @ApiModelProperty(required = true, value = "出账日期")
     private Integer statementDate;
 
@@ -55,4 +58,7 @@ public class LiabilityAccount {
 
     @ApiModelProperty(required = true, value = "修改时间")
     private Date modified;
+
+    @ApiModelProperty(required = true, value = "修改人")
+    private String description;
 }

@@ -47,4 +47,10 @@ public interface AssetsAccountService {
      * @return 账户
      */
     AssetsAccount getAccountById(String id);
+
+    /**
+     * 获取账户列表
+     * @return
+     */
+    AccountListVO getAccountList();
 }
