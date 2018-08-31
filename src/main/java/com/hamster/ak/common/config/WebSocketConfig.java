@@ -15,6 +15,8 @@ import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.ServerEndpointConfig;
 import java.util.Optional;
 
+import static com.hamster.ak.common.exception.HmError.TOKEN_NOT_EXIST;
+
 @Configuration
 @Slf4j
 public class WebSocketConfig extends ServerEndpointConfig.Configurator{
@@ -31,7 +33,7 @@ public class WebSocketConfig extends ServerEndpointConfig.Configurator{
         if (tokenStr != null) {
             TokenServiceImpl tokenServiceImpl = new TokenServiceImpl();
             Integer userId = Optional.ofNullable(tokenServiceImpl.decodeToken((String) tokenStr)).orElseThrow(() ->
-                    new HmException("该连接中 token 不存在")).getUserId();
+                    new HmException(TOKEN_NOT_EXIST)).getUserId();
             sec.getUserProperties().put("userId", userId);
         }
 

@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public interface LiabilityAccountMapper {
 
-    public List<LiabilityAccountBean> selectAll();
+    public List<LiabilityAccountBean> selectAll(@Param("userId")Integer userId);
 
     public LiabilityAccountBean selectById(@Param("id") Integer id);
 

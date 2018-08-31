@@ -14,16 +14,4 @@ import java.net.URI;
 @SpringBootTest
 public class HmApplicationTests {
 
-    @Autowired
-    private LiabilityAccountService liabilityAccountService;
-
-    @Test
-    public void contextLoads() {
-    }
-
-    @Test
-    public void remindTest() {
-        liabilityAccountService.remind();
-    }
-
 }

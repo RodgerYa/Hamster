@@ -1,26 +1,17 @@
 package com.hamster.ak.common.exception;
 
+import lombok.Data;
+
 /**
  * @author yanwenbo
  */
+@Data
 public class HmException extends RuntimeException {
 
     private Integer code;
 
-    public HmException(String message, Integer code) {
-        super(message);
-        this.code = code;
-    }
-
-    public HmException(String message) {
-        super(message);
-    }
-
-    public HmException(Throwable cause) {
-        super(cause);
-    }
-
-    public HmException(String message, Throwable cause) {
-        super(message, cause);
+    public HmException(ApiError error) {
+        super(error.getMessage());
+        this.code = error.getCode();
     }
 }

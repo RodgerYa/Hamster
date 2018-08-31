@@ -38,22 +38,22 @@ public class GlobalExceptionHandler {
         String rootCauseMessage = ExceptionUtils.getRootCauseMessage(rootError);
         if (StringUtils.containsIgnoreCase(rootCauseMessage, "Broken pipe")
                 || StringUtils.containsIgnoreCase(rootCauseMessage, "Connection reset by peer")) {
-            // 客户端连接已断开，无法返回内容
+            log.error("客户端连接已断开，无法返回内容");
             return null;
         } else {
             log.error("Exception occurred: " + throwable.getMessage()
-                    + ". [URL=" + request.getRequestURI() + "]", rootError);
+                    + ". [URI: " + request.getRequestURI() + "]");
+            rootError.printStackTrace();
         }
 
-        log.error(throwable.getMessage(), throwable);
-
+//        log.error(throwable.getMessage(), throwable);
         JsonResult result;
         if (throwable instanceof HmException) {
             // 这里捕获到的都是自己封装好的业务异常， 可以进行详细异常分析，以及分类处理操作
-            result = JsonResult.fail(throwable.getMessage());
+            result = JsonResult.fail((HmException) throwable);
         } else if (throwable instanceof MethodArgumentNotValidException) {
             // 一般都是参数校验异常 也可能是服务内部的异常
-            result = JsonResult.systemError();
+            result = JsonResult.fail(throwable.getMessage());
         } else {
             // 其他异常
             result = JsonResult.systemError();

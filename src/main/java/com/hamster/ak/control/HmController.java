@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.json.Json;
 import javax.validation.Valid;
 
 import java.util.List;
@@ -23,6 +24,9 @@ public class HmController {
 
     @Autowired
     private LiabilityAccountService liabilityAccountService;
+
+    @Autowired
+    private AssetsAccountService assetsAccountService;
 
     @ApiOperation(value = "新增用户")
     @PostMapping(CREATE_USER)
@@ -85,6 +89,13 @@ public class HmController {
 
         liabilityAccountService.delete(id);
         return JsonResult.ok();
+    }
+
+    @ApiOperation(value = "获取账户列表")
+    @GetMapping(ACCOUNT_LIST)
+    public JsonResult<AccountListVO> accountList() {
+
+        return JsonResult.ok(assetsAccountService.getAccountList());
     }
 
     @ApiOperation(value = "用户账单列表")

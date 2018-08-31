@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
+import static com.hamster.ak.common.exception.HmError.TOKEN_NOT_EXIST;
 import static javax.servlet.http.HttpServletResponse.SC_OK;
 import static org.springframework.http.HttpHeaders.CACHE_CONTROL;
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -39,7 +40,7 @@ public class HmInterceptor extends HandlerInterceptorAdapter {
 
             String tokenStr = request.getHeader("token");
             if (StringUtils.isEmpty(tokenStr)) {
-                throw new HmException("token 不存在");
+                throw new HmException(TOKEN_NOT_EXIST);
             }
             Token token = tokenService.decodeToken(tokenStr);
 

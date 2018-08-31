@@ -2,12 +2,10 @@ package com.hamster.ak.common.web;
 
 import com.hamster.ak.api.BasicAdviceMessage;
 import com.hamster.ak.api.RemindersVO;
-import com.hamster.ak.api.TokenService;
 import com.hamster.ak.common.config.WebSocketConfig;
 import com.hamster.ak.common.exception.HmException;
 import com.hamster.ak.common.handler.JsonEncoder;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.json.Json;
@@ -20,6 +18,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import static com.hamster.ak.common.exception.HmError.TOKEN_NOT_EXIST;
+import static com.hamster.ak.common.exception.HmError.WS_SEND_MESSAGE_ERROR;
+
 @Slf4j
 @ServerEndpoint(value = "/notify", configurator = WebSocketConfig.class, encoders = JsonEncoder.class)
 @Component
@@ -30,9 +31,6 @@ public class WebSocketServer {
     private static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
 
     private Session session;
-
-    @Autowired
-    private TokenService tokenService;
 
     /**
      * 建立连接调用
@@ -73,14 +71,14 @@ public class WebSocketServer {
     public void onMessage(String message, Session session) {
         log.info("客户端 session: [" + session.getId() + ", " + session.getRequestURI() + "] 发来消息: " + message);
 
-//        消息群发，可用于用户组内，暂不支持
+//        TODO @yanwenbo 消息群发，可用于用户组内，暂不支持
 //        webSocketSet.forEach(item -> item.sendMessage(message));
     }
 
     @OnError
     public void onError(Session session, Throwable throwable) {
-        log.error("websocket 产生错误", throwable);
-//        throw new HmException(throwable);
+        log.error("websocket 产生错误");
+        throwable.printStackTrace();
     }
 
 
@@ -93,7 +91,7 @@ public class WebSocketServer {
 
         webSocketSet.stream().filter(webSocketServer ->
                 Optional.ofNullable(webSocketServer.session.getUserProperties().get("userId")).orElseThrow(() ->
-                        new HmException("该连接中 token 不存在")).equals(userId))
+                        new HmException(TOKEN_NOT_EXIST)).equals(userId))
                 .forEach(socket -> socket.sendMessage(message));
     }
 
@@ -116,7 +114,7 @@ public class WebSocketServer {
         try {
             this.session.getBasicRemote().sendObject(message);
         } catch (IOException | EncodeException e) {
-            throw new HmException("websocket send message exception", e);
+            throw new HmException(WS_SEND_MESSAGE_ERROR);
         }
     }
 
@@ -129,7 +127,7 @@ public class WebSocketServer {
         try {
             this.session.getBasicRemote().sendText(message);
         } catch (IOException e) {
-            throw new HmException("websocket send message exception", e);
+            throw new HmException(WS_SEND_MESSAGE_ERROR);
         }
     }
 
@@ -156,7 +154,7 @@ public class WebSocketServer {
             JsonObject obj = Json.createObjectBuilder().add("message", message.toJson()).build();
             this.session.getBasicRemote().sendObject(obj);
         } catch (IOException | EncodeException e) {
-            throw new HmException("websocket send message exception", e);
+            throw new HmException(WS_SEND_MESSAGE_ERROR);
         }
     }
 
