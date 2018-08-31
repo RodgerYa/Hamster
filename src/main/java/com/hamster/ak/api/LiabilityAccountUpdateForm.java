@@ -1,5 +1,6 @@
 package com.hamster.ak.api;
 
+import com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -16,6 +17,10 @@ public class LiabilityAccountUpdateForm {
     @ApiModelProperty(required = true, value = "原来账户名称")
     @NotNull
     private String oldName;
+
+    @ApiModelProperty(required = true, value = "账户类型")
+    @NotNull
+    private LiabilityAccountTypeEnum type;
 
     @ApiModelProperty(value = "新账户名称")
     private Optional<String> newName = Optional.empty();

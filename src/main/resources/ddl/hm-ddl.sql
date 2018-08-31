@@ -38,7 +38,7 @@ create table if not exists assetsaccount (
   modified datetime not null default current_timestamp on update current_timestamp comment '修改时间',
   description text COMMENT '账户描述',
   primary key(id),
-  unique key uk_useraccount(userid, name)
+  unique key uk_useraccount(userid, name,type)
 )engine=innodb default charset=utf8mb4 comment '资产账户表'
 
 create table if not exists liabilityaccount (
@@ -57,7 +57,7 @@ create table if not exists liabilityaccount (
   modified datetime not null default current_timestamp on update current_timestamp comment '修改时间',
   description text COMMENT '账户描述',
   primary key(id),
-  unique key uk_useraccount(userid, name)
+  unique key uk_useraccount(userid, name,type)
 )engine=innodb default charset=utf8mb4 comment '负债账户表'
 
 create table if not exists billitem (

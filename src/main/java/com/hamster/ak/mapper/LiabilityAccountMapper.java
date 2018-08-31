@@ -1,6 +1,7 @@
 package com.hamster.ak.mapper;
 
 import com.hamster.ak.bean.LiabilityAccountBean;
+import com.hamster.ak.common.enumeration.LiabilityAccountTypeEnum;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ public interface LiabilityAccountMapper {
 
     public LiabilityAccountBean selectById(@Param("id") Integer id);
 
-    public LiabilityAccountBean selectByUserIdAndName(@Param("userId") Integer userId, @Param("name") String name);
+    public LiabilityAccountBean selectByUserIdAndName(@Param("userId") Integer userId, @Param("name") String name, @Param("type")LiabilityAccountTypeEnum type);
 
     public Integer update(@Param("bean") LiabilityAccountBean bean);
 

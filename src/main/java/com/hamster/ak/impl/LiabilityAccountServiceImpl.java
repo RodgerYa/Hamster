@@ -35,8 +35,11 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
     @HamsterTx
     public Integer create(LiabilityAccountCreation creation) {
 
-        Optional.ofNullable(liabilityAccountMapper.selectByUserIdAndName(ThreadLocalUser.getUser().getId(),
-                creation.getName())).orElseThrow(() -> new HmException(ACCOUNT_EXISTED));
+        boolean exist = Optional.ofNullable(liabilityAccountMapper.selectByUserIdAndName(ThreadLocalUser.getUser().getId(),
+                creation.getName(), creation.getType())).isPresent();
+        if (exist) {
+            throw new HmException(ACCOUNT_EXISTED);
+        }
 
         return Optional.ofNullable(liabilityAccountMapper.insert(liabilityAccountTransfer
                 .transferTOLiabilityAccountBean(creation))).orElseThrow(() -> new HmException(ADD_FAIL));
@@ -47,7 +50,7 @@ public class LiabilityAccountServiceImpl implements LiabilityAccountService {
     public Integer update(LiabilityAccountUpdateForm account) {
 
         Integer accountId = Optional.ofNullable(
-                liabilityAccountMapper.selectByUserIdAndName(ThreadLocalUser.getUser().getId(), account.getOldName())
+                liabilityAccountMapper.selectByUserIdAndName(ThreadLocalUser.getUser().getId(), account.getOldName(), account.getType())
         ).orElseThrow(() -> new HmException(ACCOUNT_NOT_EXIST)).getId();
 
         return Optional.ofNullable(liabilityAccountMapper.update(liabilityAccountTransfer

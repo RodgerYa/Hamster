@@ -109,6 +109,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void loginOut() {
         User user = Optional.ofNullable(ThreadLocalUser.getUser()).orElseThrow(() -> new HmException(USER_NOT_LOGIN));
+        log.info("user [id: " + user.getId() + ", name: "+ user.getName() + "] login out.");
         webSocketServer.onClose();
     }
 

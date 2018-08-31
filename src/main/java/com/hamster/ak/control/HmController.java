@@ -43,6 +43,13 @@ public class HmController {
         return JsonResult.ok(userService.login(credential));
     }
 
+    @ApiOperation(value = "退出登陆")
+    @GetMapping(LOGINOUT)
+    public JsonResult loginout() {
+        userService.loginOut();
+        return JsonResult.ok();
+    }
+
     @ApiOperation(value = "修改密码")
     @PostMapping(CHANGE_PASSWORD)
     public JsonResult changePassword(@RequestBody @Valid UserChangePasswordForm form) {

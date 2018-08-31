@@ -15,8 +15,8 @@ public enum AccountTypeEnum {
     ALIPAY(0, "支付宝"),
     VCHATPAY(1, "微信支付"),
     CHASH(2, "现金"),
-    BANKCARD(3, "银行卡");
-
+    BANKCARD(3, "银行卡"),
+    OTHER(4, "其他");
     // 资产账户-投资理财
 
     private Integer code;

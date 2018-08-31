@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import static com.hamster.ak.common.exception.HmError.TOKEN_NOT_EXIST;
+import static com.hamster.ak.common.exception.HmError.USER_NOT_LOGIN;
 import static com.hamster.ak.common.exception.HmError.WS_SEND_MESSAGE_ERROR;
 
 @Slf4j
@@ -55,10 +56,11 @@ public class WebSocketServer {
      */
     @OnClose
     public void onClose() {
-        webSocketSet.remove(this);
-        subOnlineCount();
-        log.info("有连接关闭,session: [" + session.getId() + ", " + session.getRequestURI() + "], 在线设备： "
-                + getOnlineCount());
+        Optional.ofNullable(session).orElseThrow(() -> new HmException(USER_NOT_LOGIN));
+            webSocketSet.remove(this);
+            subOnlineCount();
+            log.info("有连接关闭,session: [" + session.getId() + ", " + session.getRequestURI() + "], 在线设备： "
+                    + getOnlineCount());
     }
 
     /**
@@ -99,7 +101,7 @@ public class WebSocketServer {
      * @param map
      */
     public void sendMessage(@NotNull Map<Integer, RemindersVO> map) {
-        // FIXME @yanwenbo 最简单的操作 没有考虑用户没有建立连接的情况是大多数/失败重试/漏掉其他。
+        // FIXME @yanwenbo 最简单的操作 没有考虑失败重试/漏掉其他。
         // FIXME 遍历时先遍历需要发送的消息列表，对于没有建立连接的用户需要在数据库中存储（不清楚现在的app 强制推送时怎么做的，就需要存储，等待连接重试）
         // TODO 这里可以开多线程提高速度
         map.forEach((key, value) ->

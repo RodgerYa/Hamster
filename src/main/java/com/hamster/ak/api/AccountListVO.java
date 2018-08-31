@@ -12,7 +12,7 @@ public class AccountListVO {
 
     private Integer totalLiability;
 
-    private List<AssetsAccountVO> assertsAccounts;
+    private List<AssetsAccountVO> assetsAccounts;
 
     private List<LiabilityAccountVO> liabilityAccounts;
 }
