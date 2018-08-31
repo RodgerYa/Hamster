@@ -4,6 +4,7 @@ public class Routes {
 
     // 用户
     public static final String LOGIN = "/api/user/login";
+    public static final String LOGINOUT = "/api/user/loginout";
     public static final String GET_USER = "/api/user/{id}";
     public static final String CREATE_USER = "/api/user/create";
     public static final String USER_LIST = "/api/user/list";

@@ -38,7 +38,7 @@
     <select id="selectByUserIdAndName" resultMap="base_column_map">
         select
         <include refid="base_column_list"/>
-        from liabilityaccount where userid=#{userId, jdbcType=INTEGER} and name=#{name, jdbcType=INTEGER}
+        from liabilityaccount where userid=#{userId, jdbcType=INTEGER} and name=#{name, jdbcType=INTEGER} and type=#{type, jdbcType=INTEGER}
     </select>
 
     <select id="selectRepaymentList" resultMap="base_column_map">
